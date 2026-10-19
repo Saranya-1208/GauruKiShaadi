@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gauru ki ho gayi wah bhai wah!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=DM+Sans:wght@400;600;800&family=Kalam:wght@400;700&family=Rozha+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#FFD0E2; --bg2:#E6D9FF;
+  --ink:#3A1034; --ink-soft:#7A3A6E;
+  --paper:#FFF7FB; --line:rgba(58,16,52,.2);
+  --rani:#E8407A; --marigold:#FFB020; --teal:#0FA3A3; --violet:#7B3FBF; --coral:#FF6B4A; --plum:#3A1034;
+  --display:"Rozha One",Georgia,serif;
+  --hand:"Kalam","Segoe Print","Bradley Hand",cursive;
+  --brush:"Caveat Brush","Kalam",cursive;
+  --body:"DM Sans","Segoe UI",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg1:#3B0F37; --bg2:#1C0B33;
+    --ink:#FFE8F3; --ink-soft:#E9B4D6;
+    --paper:#34132F; --line:rgba(255,232,243,.24);
+  }
+}
+:root[data-theme="dark"]{
+  --bg1:#3B0F37; --bg2:#1C0B33;
+  --ink:#FFE8F3; --ink-soft:#E9B4D6;
+  --paper:#34132F; --line:rgba(255,232,243,.24);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);color-scheme:light dark}
+*,*::before,*::after{box-sizing:border-box}
+body{
+  margin:0;font-family:var(--body);color:var(--ink);min-height:100vh;overflow-x:hidden;
+  background-color:var(--bg1);
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(123,63,191,.16) 1.2px, transparent 1.8px),
+    radial-gradient(circle at 15% 8%, rgba(255,255,255,.5), transparent 38%),
+    radial-gradient(circle at 88% 28%, rgba(255,176,32,.28), transparent 42%),
+    linear-gradient(170deg,var(--bg1),var(--bg2));
+  background-size:26px 26px,auto,auto,auto;
+}
+.garland{height:118px;background-repeat:repeat-x;background-position:center top;background-size:140px 118px;position:relative;z-index:2}
+.wrap{position:relative;max-width:1100px;margin:0 auto;padding:0 1.25rem 3.5rem}
+
+/* Hero */
+.hero{position:relative;text-align:center;padding:1rem 0 1.5rem}
+.bouquet{position:absolute;top:-1.5rem;width:120px;z-index:0;pointer-events:none}
+.bouquet svg{display:block;width:100%;height:auto}
+.bouquet.l{left:-2.5rem}
+.bouquet.r{right:-2.5rem;transform:scaleX(-1)}
+@media (min-width:700px){.bouquet{width:210px;top:-2rem}.bouquet.l{left:-2rem}.bouquet.r{right:-2rem}}
+.titlewrap{position:relative;z-index:1;display:inline-block}
+h1{
+  margin:0;font-family:var(--display);font-weight:400;line-height:.98;
+  font-size:clamp(2.7rem,12vw,6.6rem);color:var(--rani);
+  text-shadow:3px 3px 0 var(--marigold),6px 6px 0 var(--plum);
+}
+h1 span{display:block}
+.sticker{
+  position:absolute;right:-1.4rem;top:-1.6rem;width:98px;height:98px;transform:rotate(12deg);
+  display:grid;place-items:center;
+}
+.sticker svg{position:absolute;inset:0;width:100%;height:100%}
+.sticker span{position:relative;font-family:var(--brush);font-size:.98rem;line-height:1.05;color:var(--plum);padding:0 .6rem}
+@media (min-width:700px){.sticker{width:132px;height:132px;right:-3.2rem;top:-2.2rem}.sticker span{font-size:1.3rem}}
+.lede{position:relative;z-index:1;max-width:32rem;margin:1.4rem auto 0;font-size:1.15rem;line-height:1.55;color:var(--ink)}
+
+.countdown{position:relative;z-index:1;margin:1.75rem auto 0;display:flex;justify-content:center;gap:.5rem 1rem;flex-wrap:wrap}
+.cd{display:grid;justify-items:center;gap:.15rem}
+.bloom{position:relative;width:76px;height:76px}
+.bloom svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.bloom .n{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:50px;height:50px;border-radius:50%;
+  display:grid;place-items:center;background:#fff;color:var(--plum);
+  font-family:var(--display);font-size:1.45rem;line-height:1;
+}
+.cd .l{font-weight:600;font-size:.98rem;color:var(--ink)}
+.countdown-done{display:none;position:relative;z-index:1;margin:1.75rem auto 0;max-width:32rem;font-family:var(--display);font-size:1.9rem;line-height:1.2;color:var(--rani)}
+.is-done .countdown{display:none}
+.is-done .countdown-done{display:block}
+.when{position:relative;z-index:1;margin:.8rem 0 0;font-size:1rem;color:var(--ink-soft)}
+
+/* Doors */
+.doors{display:flex;flex-wrap:wrap;justify-content:center;gap:2.75rem 1.5rem;margin-top:3rem}
+.door{
+  flex:0 0 calc(50% - .75rem);
+  appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;
+  cursor:pointer;text-align:center;display:grid;gap:.9rem;align-content:start;
+}
+@media (min-width:640px){.door{flex:0 0 172px}}
+.archwrap{position:relative;display:block;transition:transform .2s ease}
+.door:hover .archwrap{transform:translateY(-4px)}
+.door:focus-visible{outline:none}
+.door:focus-visible .arch{outline:3px solid var(--plum);outline-offset:6px}
+.arch{
+  position:relative;display:block;width:100%;aspect-ratio:3 / 4.2;
+  border-radius:999px 999px 10px 10px;border:4px solid #fff;
+  background:radial-gradient(circle at 50% 62%,#fff 0,#FFE9F2 40%,var(--c1) 125%);
+  overflow:hidden;perspective:900px;
+  box-shadow:0 9px 0 var(--c2);
+}
+.crown{position:absolute;left:0;top:0;width:100%;height:auto;overflow:visible;pointer-events:none}
+.glow{position:absolute;inset:0;display:grid;place-items:center}
+.glow svg{width:62%;height:auto;margin-top:30%}
+.leaf{
+  position:absolute;top:0;bottom:0;width:50%;
+  background:linear-gradient(160deg,var(--c1),var(--c2));
+  transition:transform .7s cubic-bezier(.5,0,.2,1);backface-visibility:hidden;-webkit-backface-visibility:hidden;
+}
+.leaf::before{
+  content:"";position:absolute;left:12%;right:12%;top:30%;bottom:9%;
+  border:2px solid rgba(255,255,255,.85);border-radius:10px;
+  background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.35) 0 2px,transparent 2.5px) 0 0/14px 14px;
+}
+.leaf::after{content:"";position:absolute;top:60%;width:11px;height:11px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px rgba(0,0,0,.2)}
+.leaf.l{left:0;transform-origin:left center;border-right:1px solid rgba(0,0,0,.25)}
+.leaf.l::after{right:7px}
+.leaf.r{right:0;transform-origin:right center}
+.leaf.r::after{left:7px}
+.opened .leaf.l{transform:rotateY(-80deg)}
+.opened .leaf.r{transform:rotateY(80deg)}
+.plaque{display:grid;gap:.15rem;padding:0 .2rem}
+.dayname{font-weight:600;font-size:.98rem;color:var(--ink-soft)}
+.title{font-family:var(--display);font-size:1.28rem;line-height:1.12;color:var(--ink)}
+
+.envelope-row{display:flex;justify-content:center;margin-top:3.25rem}
+.env{
+  appearance:none;background:none;border:0;padding:0;font:inherit;color:inherit;cursor:pointer;
+  display:grid;justify-items:center;gap:.75rem;
+}
+.env:focus-visible{outline:3px solid var(--plum);outline-offset:6px;border-radius:12px}
+.env-art{position:relative;width:min(260px,72vw);aspect-ratio:13 / 8.5;border-radius:10px;background:var(--rani);box-shadow:0 9px 0 #B01558;transition:transform .2s ease;overflow:hidden}
+.env:hover .env-art{transform:translateY(-4px) rotate(-1.5deg)}
+.env-art::before{content:"";position:absolute;inset:0;background:linear-gradient(to bottom right,transparent 49.5%,rgba(0,0,0,.14) 50%) left/50% 100% no-repeat,linear-gradient(to bottom left,transparent 49.5%,rgba(0,0,0,.14) 50%) right/50% 100% no-repeat}
+.env-art::after{content:"";position:absolute;left:0;right:0;top:0;height:62%;background:#F25C93;clip-path:polygon(0 0,100% 0,50% 100%)}
+.seal{position:absolute;left:50%;top:50%;width:54px;height:54px;transform:translate(-50%,-30%);z-index:2;display:grid;place-items:center;border-radius:50%;background:var(--marigold);box-shadow:0 3px 0 rgba(0,0,0,.25)}
+.seal svg{width:28px;height:28px}
+.env .t1{font-family:var(--display);font-size:1.5rem;color:var(--ink)}
+.env .t2{font-family:var(--hand);font-size:1.15rem;color:var(--ink-soft)}
+.hint{margin:2rem 0 0;text-align:center;font-size:1rem;color:var(--ink-soft)}
+.floral-row{margin-top:2.25rem;display:flex;justify-content:center}
+.floral-row svg{width:min(560px,100%);height:auto}
+footer{margin-top:1rem;text-align:center;font-family:var(--brush);font-size:1.7rem;color:var(--rani)}
+
+/* Music button */
+.music{
+  position:fixed;right:1rem;bottom:calc(1rem + env(safe-area-inset-bottom,0px));z-index:30;
+  display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1rem .6rem .8rem;border-radius:999px;
+  border:2px solid var(--plum);background:var(--marigold);color:var(--plum);
+  font:inherit;font-weight:600;font-size:.98rem;cursor:pointer;box-shadow:0 4px 0 var(--plum);
+}
+.music[hidden]{display:none}
+.music:focus-visible{outline:3px solid var(--rani);outline-offset:3px}
+.music svg{width:22px;height:22px}
+.music .off{display:none}
+.music[aria-pressed="false"] .on{display:none}
+.music[aria-pressed="false"] .off{display:block}
+
+/* Dialog */
+dialog{border:0;padding:0;background:transparent;color:var(--ink);width:min(680px,94vw);max-height:90vh;max-height:90dvh;margin:auto}
+dialog::backdrop{background:rgba(40,8,46,.78);backdrop-filter:blur(3px)}
+.sheet{position:relative;max-height:90vh;max-height:90dvh;overflow:auto;background:var(--paper);border:4px solid #fff;border-radius:20px;box-shadow:0 0 0 3px var(--c1)}
+.sheet-head{position:relative;overflow:hidden;padding:1.4rem 3.5rem 1.2rem 1.5rem;background:linear-gradient(135deg,var(--c1),var(--c2));color:var(--on)}
+.sheet-head .d{display:block;font-family:var(--brush);font-size:1.6rem;line-height:1.1}
+.sheet-head .t{position:relative;display:block;margin-top:.15rem;font-family:var(--display);font-size:1.6rem;line-height:1.15;max-width:78%}
+.head-flowers{position:absolute;right:-18px;bottom:-26px;width:150px;height:auto;opacity:.95;pointer-events:none}
+.close{
+  position:absolute;top:.75rem;right:.75rem;z-index:2;width:2.5rem;height:2.5rem;border-radius:50%;
+  border:2px solid var(--on);background:rgba(255,255,255,.2);color:var(--on);font:inherit;font-size:1.5rem;line-height:1;cursor:pointer;
+}
+.close:focus-visible,.pill:focus-visible,.next:focus-visible,.segbtn:focus-visible,.play:focus-visible{outline:3px solid var(--plum);outline-offset:3px}
+.sheet-body{padding:1.5rem}
+.sec + .sec{margin-top:2rem;padding-top:1.75rem;border-top:3px dotted var(--line)}
+.sec h3{margin:0 0 .75rem;font-family:var(--display);font-weight:400;font-size:1.5rem;color:var(--rani)}
+.letter p{margin:0 0 .9rem;font-family:var(--hand);font-size:1.28rem;line-height:1.75;color:var(--ink)}
+.letter .sign{margin-top:1.1rem;white-space:pre-line}
+.letter.big p{font-size:1.32rem}
+.song{display:grid;gap:.45rem}
+.song .name{font-weight:800;font-size:1.3rem}
+.song .by{color:var(--ink-soft);font-size:1.05rem}
+.song .why{margin:.2rem 0 0;font-family:var(--hand);font-size:1.2rem;line-height:1.6}
+.pills{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.6rem}
+.pill{display:inline-block;padding:.6rem 1.1rem;border-radius:999px;text-decoration:none;font-weight:600;font-size:1rem;border:2px solid var(--rani)}
+.pill.fill{background:var(--rani);color:#fff}
+.pill.line{background:transparent;color:var(--rani)}
+.extra p{margin:0 0 .8rem;font-family:var(--hand);font-size:1.25rem;line-height:1.7}
+
+/* Poster (2 states) */
+.poster-ui{display:grid;justify-items:center;gap:1rem}
+.seg{display:inline-flex;border:2px solid var(--plum);border-radius:999px;overflow:hidden;background:#fff}
+.segbtn{appearance:none;border:0;background:transparent;color:var(--plum);font:inherit;font-weight:600;font-size:1rem;padding:.55rem 1.4rem;cursor:pointer}
+.segbtn[aria-pressed="true"]{background:var(--plum);color:#fff}
+.poster-stage{position:relative;width:min(320px,100%);aspect-ratio:5 / 8;perspective:1100px;cursor:pointer}
+.poster-inner{position:absolute;inset:0;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transition:transform .8s cubic-bezier(.5,0,.2,1)}
+.poster-stage[data-state="1"] .poster-inner{transform:rotateY(180deg)}
+.face{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;text-align:center;gap:.35rem;
+  padding:.9rem .9rem .8rem;border-radius:10px;border:5px solid #fff;color:#fff;overflow:hidden;
+  background:linear-gradient(165deg,var(--c1),var(--c2));
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  box-shadow:0 8px 0 rgba(58,16,52,.35);
+}
+.face.f1{transform:rotateY(180deg)}
+.rating{font-family:var(--brush);font-size:1.05rem;padding:.05rem .7rem;border-radius:999px;background:rgba(255,255,255,.22)}
+.art{width:100%;height:96px;flex:none}
+.art svg{width:100%;height:100%;overflow:visible}
+.ptitle{margin:0;font-family:var(--display);font-weight:400;font-size:2rem;line-height:1;text-shadow:2px 2px 0 rgba(58,16,52,.55)}
+.ptag{margin:0;font-family:var(--brush);font-size:1.2rem;line-height:1.1}
+.review{margin-top:auto;width:100%;padding:.55rem .6rem;border-radius:8px;background:rgba(255,255,255,.95);color:var(--plum)}
+.review .stars{display:block;color:#F58A00;font-size:1rem;letter-spacing:.1em}
+.review p{margin:.1rem 0 .15rem;font-family:var(--hand);font-size:.98rem;line-height:1.3;color:var(--plum)}
+.review .critic{display:block;font-size:.82rem;font-weight:600;color:var(--ink-soft)}
+.credits{margin:.3rem 0 0;font-size:.78rem;line-height:1.3;opacity:.95}
+.tapnote{margin:0;font-size:.92rem;color:var(--ink-soft)}
+
+/* Award */
+.award-card{display:flex;align-items:center;gap:1rem;padding:1rem 1.1rem;border-radius:16px;background:linear-gradient(135deg,#FFE9A8,#FFB020);border:3px solid #fff;box-shadow:0 6px 0 #C9830A;color:var(--plum)}
+.award-card svg{width:68px;height:auto;flex:none}
+.award-card .a1{display:block;font-family:var(--display);font-size:1.6rem;line-height:1.05}
+.award-card .a2{display:block;margin-top:.25rem;font-family:var(--hand);font-size:1.15rem}
+.note-card{margin-top:1.1rem;padding:1rem 1.1rem;border-radius:14px;background:#fff;border:2px dashed var(--rani);transform:rotate(-.8deg)}
+.note-card .from{display:block;font-weight:800;font-size:.98rem;color:var(--rani)}
+.note-card p{margin:.4rem 0 0;font-family:var(--hand);font-size:1.22rem;line-height:1.6;color:var(--plum)}
+
+/* Playlist */
+.tracks{list-style:none;margin:0;padding:0;display:grid;gap:.7rem}
+.tracks li{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:.8rem;padding:.7rem .8rem;border-radius:14px;border:2px solid var(--line)}
+.vinyl{width:42px;height:42px;border-radius:50%;background:radial-gradient(circle,var(--rani) 0 22%,#fff 23% 27%,#2a0c27 28% 100%);box-shadow:inset 0 0 0 3px #2a0c27}
+.tn{display:block;font-weight:800;font-size:1.05rem}
+.ta{display:block;font-size:.92rem;color:var(--ink-soft)}
+.tw{margin:.2rem 0 0;font-family:var(--hand);font-size:1.08rem;line-height:1.4}
+.play{padding:.4rem .9rem;border-radius:999px;border:2px solid var(--rani);color:var(--rani);font-weight:600;font-size:.95rem;text-decoration:none}
+
+/* Promises */
+.promises{list-style:none;margin:0;padding:0;display:grid;gap:.75rem}
+.promises li{display:grid;grid-template-columns:auto 1fr;gap:.7rem;align-items:start;font-family:var(--hand);font-size:1.22rem;line-height:1.5}
+.promises svg{width:30px;height:30px;margin-top:.15rem}
+.signoff{margin-top:1.4rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.sig{font-family:var(--brush);font-size:1.7rem;white-space:pre-line;color:var(--ink)}
+.stamp{display:inline-block;padding:.35rem .9rem;border:3px solid var(--rani);border-radius:10px;color:var(--rani);font-family:var(--display);font-size:1.15rem;transform:rotate(-8deg)}
+
+/* Video */
+.screen{position:relative;border-radius:12px;overflow:hidden;background:#1a0818;border:4px solid var(--plum);aspect-ratio:16 / 9;display:grid;place-items:center}
+.screen video{position:absolute;inset:0;width:100%;height:100%;background:#000}
+.curtain{position:absolute;top:0;bottom:0;width:17%;background:repeating-linear-gradient(90deg,#D81B60 0 10px,#A8124A 10px 20px);z-index:1;pointer-events:none}
+.curtain.l{left:0;border-radius:0 0 40% 0}
+.curtain.r{right:0;border-radius:0 0 0 40%}
+.screen-msg{position:relative;z-index:2;text-align:center;padding:0 22%;color:#fff;font-family:var(--hand);font-size:1.2rem;line-height:1.4}
+.screen-msg strong{display:block;font-family:var(--display);font-weight:400;font-size:1.5rem;margin-bottom:.2rem;color:var(--marigold)}
+.watch{display:inline-block;margin-top:.7rem;padding:.55rem 1.1rem;border-radius:999px;background:var(--marigold);color:var(--plum);font-family:var(--body);font-weight:800;font-size:1rem;text-decoration:none}
+.watch:focus-visible{outline:3px solid #fff;outline-offset:3px}
+
+.sheet-foot{display:flex;justify-content:flex-end;gap:.75rem;padding:0 1.5rem 1.5rem}
+.next{padding:.7rem 1.3rem;border-radius:999px;border:2px solid var(--rani);background:var(--rani);color:#fff;font:inherit;font-weight:600;font-size:1.05rem;cursor:pointer}
+.next.quiet{background:transparent;color:var(--rani)}
+
+.petals{position:fixed;inset:0;pointer-events:none;z-index:60;overflow:hidden}
+.petal{position:absolute;border-radius:60% 0 60% 0}
+
+@media (prefers-reduced-motion: reduce){
+  .leaf,.archwrap,.poster-inner,.env-art{transition:none}
+}
+</style>
+</head>
+<body>
+<div class="garland" id="garland" aria-hidden="true"></div>
+
+<main class="wrap" id="app">
+  <section class="hero">
+    <div class="bouquet l" id="bqL" aria-hidden="true"></div>
+    <div class="bouquet r" id="bqR" aria-hidden="true"></div>
+
+    <div class="titlewrap">
+      <h1><span>Gauru ki</span><span>ho gayi</span><span>wah bhai wah!</span></h1>
+      <div class="sticker" id="sticker" aria-hidden="true"><span>Coming soon to a wedding near you</span></div>
+    </div>
+    <p class="lede">Five doors, five days, one very overdramatic friend. Open them in any order, as many times as you like.</p>
+
+    <div class="countdown" id="countdown" role="timer" aria-label="Time until the wedding"></div>
+    <p class="countdown-done" id="cd-done">It’s today! Gauru ki ho gayi, wah bhai wah!</p>
+    <p class="when" id="when"></p>
+  </section>
+
+  <section class="doors" id="doors" aria-label="The five doors"></section>
+
+  <div class="envelope-row">
+    <button class="env" id="envBtn" aria-label="Open the big letter">
+      <span class="env-art"><span class="seal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 2.7 4.8 6.2 4.8c2 0 3.3 1.1 3.8 2.2.5-1.1 1.8-2.2 3.8-2.2 3.5 0 5.3 3.6 3.8 7C19.5 16.4 12 21 12 21z" fill="#E8407A"/></svg></span></span>
+      <span class="t1">The big letter</span>
+      <span class="t2">Maybe save this one for last.</span>
+    </button>
+  </div>
+
+  <div class="floral-row" id="floralRow" aria-hidden="true"></div>
+  <footer>Made for Gauru, with so much love.</footer>
+</main>
+
+<button class="music" id="music" aria-pressed="false" hidden>
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V6l10-2v12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="16.5" cy="16" r="2.5" fill="currentColor"/></svg>
+  <span class="lbl">Music</span>
+</button>
+<audio id="bg" loop preload="none"></audio>
+
+<dialog id="dlg" aria-labelledby="dlg-title">
+  <div class="sheet" id="sheet"></div>
+</dialog>
+<div class="petals" id="petals" aria-hidden="true"></div>
+
+<script>
+/* ====================================================================
+   EDIT HERE
+   WEDDING     the moment the countdown ends (your local time)
+   BG_SONG     background song: a data: URI or a file URL (see note below)
+   VIDEO_SRC   the Friday video file (data: URI), or leave "" and use VIDEO_LINK
+   VIDEO_LINK  a link to the video (YouTube, Drive, etc.), shown as a button
+   Everything in [square brackets] is a placeholder to replace.
+   ==================================================================== */
+const WEDDING    = new Date("2026-10-24T10:00:00");
+const BG_SONG    = "";   // e.g. "data:audio/mpeg;base64,...."  (keep the whole page under 16 MB)
+const VIDEO_SRC  = "";
+const VIDEO_LINK = "";
+
+const DAYS = [
+  {
+    day:"Monday", title:"Plot twist: she’s getting married",
+    c1:"#E8407A", c2:"#B01558", on:"#FFFFFF", bloom:["marigold",""],
+    letter:[
+      `Dear Gauru,`,
+      `Plot twist! You’re getting married, and I have been told to act normal about it. I will not be acting normal. [One line about the day you met, or the moment you knew Dhruv was the one.]`
+    ],
+    sign:`Love,\n[Your name]`,
+    song:{title:"Tujhe Dekha To Yeh Jaana Sanam", artist:"Kumar Sanu & Lata Mangeshkar", why:`[Why this one? Maybe it’s the song you’ve been humming since Dhruv showed up.]`},
+    extra:{kind:"poster", title:"Now showing, in two versions", states:[
+      {label:"Before", c1:"#0FA3A3", c2:"#7B3FBF", title:"Gauru", tagline:"Single. Dramatic. Always ten minutes late.", rating:"Rated A for Aunties",
+       cast:"Starring Gauru as Gauru", director:"Directed by Destiny",
+       review:{quote:"I laughed, I cried, I ate three samosas. Ten out of five stars.", critic:"A Very Biased Critic, The Daily Chai"},
+       art:`<use href="#leaf" x="62" y="-4" width="40" height="86" transform="rotate(-40 82 40)" style="--l:#7FE3B0"/><use href="#leaf" x="104" y="-4" width="40" height="86" transform="rotate(40 124 40)" style="--l:#7FE3B0"/><use href="#marigold" x="58" y="-2" width="90" height="90"/>`},
+      {label:"After", c1:"#FF6B4A", c2:"#E8407A", title:"Gauru & Dhruv", tagline:"Same drama. Better snacks. Now with a co-star.", rating:"Rated U for Unlimited love",
+       cast:"Starring Gauru and Dhruv", director:"Directed by Destiny and two very pushy aunties",
+       review:{quote:"Two hearts, zero chill, one perfect plot. I would watch this a hundred times, with popcorn and tissues.", critic:"The Daily Chai, again"},
+       art:`<use href="#leaf" x="82" y="6" width="36" height="76" transform="rotate(-70 100 44)" style="--l:#FFE9A8"/><use href="#leaf" x="82" y="6" width="36" height="76" transform="rotate(70 100 44)" style="--l:#FFE9A8"/><use href="#rose5" x="30" y="0" width="80" height="80" style="--p:#fff;--p2:#FFB020;--c:#E8407A"/><use href="#marigold" x="92" y="2" width="82" height="82"/>`}
+    ]}
+  },
+  {
+    day:"Tuesday", title:"Badtameez Dil",
+    c1:"#7B3FBF", c2:"#4B1D87", on:"#FFFFFF", bloom:["rose5","--p:#FFB020;--p2:#F58A00"],
+    letter:[
+      `Dear Gauru,`,
+      `Badtameez dil, badtameez friend. [One affectionate roast: her worst habit, her most dramatic moment.] But you’re also the person who [one true, sweet thing]. Both things can be true.`
+    ],
+    sign:`Yours, rudely,\n[Your name]`,
+    song:{title:"Badtameez Dil", artist:"Benny Dayal", why:`[Because you’ve been a bit badtameez since forever, and I wouldn’t change it.]`},
+    extra:{kind:"award", title:"And the award goes to…",
+      award:"Best Bride Ever", line:"The winner is Gauru. The jury was me, and I was biased.",
+      from:"A note from a very famous bride (name withheld for legal reasons)",
+      note:`Dear Gauru, I have walked down many aisles on screen, and none of them were as fabulous as yours is going to be. Own the room, enjoy every second, and remember that the best entrance is the one with a tiny bit of drama. Congratulations!`}
+  },
+  {
+    day:"Wednesday", title:"London Thumakda",
+    c1:"#FFB020", c2:"#F27D00", on:"#3A1034", bloom:["daisy","--p:#fff;--c:#E8407A"],
+    letter:[
+      `Dear Gauru,`,
+      `Today’s mission: hype you up until your cheeks hurt. [Something that makes her completely unstoppable.] Nobody walks into a room like you do, and nobody leaves it the same.`
+    ],
+    sign:`Loudly yours,\n[Your name]`,
+    song:{title:"London Thumakda", artist:"Labh Janjua, Sonu Kakkar & Neha Kakkar", why:`[The song that makes us both lose all dignity on the dance floor.]`},
+    extra:{kind:"playlist", title:"Songs that remind me of Gauru", items:[
+      {title:"Kala Chashma", artist:"Amar Arshi, Badshah & Neha Kakkar", why:`[Why it reminds you of her]`},
+      {title:"Ghagra", artist:"Rekha Bhardwaj & Farhan Akhtar", why:`[Why it reminds you of her]`},
+      {title:"Ilahi", artist:"Arijit Singh", why:`[Why it reminds you of her]`},
+      {title:"Senorita", artist:"Farhan Akhtar, Hrithik Roshan & Abhay Deol", why:`[Why it reminds you of her]`},
+      {title:"Channa Mereya", artist:"Arijit Singh", why:`[Why it reminds you of her]`},
+      {title:"Gallan Goodiyaan", artist:"Shankar Mahadevan, Farhan Akhtar & more", why:`[Why it reminds you of her]`}
+    ]}
+  },
+  {
+    day:"Thursday", title:"Yeh Dosti",
+    c1:"#0FA3A3", c2:"#066B6B", on:"#FFFFFF", bloom:["rose5","--p:#fff;--p2:#FFB020;--c:#0FA3A3"],
+    letter:[
+      `Dear Gauru,`,
+      `Yeh dosti, hum nahin todenge. And now there are legal documents to prove it. [One line about how long you’ve been friends and what that has meant to you.]`
+    ],
+    sign:`Your friend for life,\n[Your name]`,
+    song:{title:"Yeh Dosti Hum Nahin Todenge", artist:"Kishore Kumar & Manna Dey", why:`[The anthem for the two of us, obviously.]`},
+    extra:{kind:"promises", title:"Promises I make as a friend for life", items:[
+      `I will always pick up your 2am calls, even if it’s just to scream.`,
+      `I will tell you the truth about the outfit. Gently. Probably.`,
+      `I will carry your shoes when your feet give up.`,
+      `[Add your own promise here.]`,
+      `I will be the loudest person clapping for you, always.`
+    ], sign:`Signed,\n[Your name]`}
+  },
+  {
+    day:"Friday", title:"Tum Hi Ho",
+    c1:"#FF6B4A", c2:"#C9381C", on:"#FFFFFF", bloom:["marigold","--p:#E8407A;--p2:#B01558;--p3:#FFB020"],
+    letter:[
+      `Dear Gauru,`,
+      `The wedding is nearly here, and I’m a mess in the best way. There’s a video from me below, and I’m sorry in advance for my face. [One last line, just for today.]`
+    ],
+    sign:`Crying already,\n[Your name]`,
+    song:{title:"Tum Hi Ho", artist:"Arijit Singh", why:`[The one that makes me cry every single time. Don’t judge me.]`},
+    extra:{kind:"video", title:"A video from me", placeholder:"My video is coming tonight. Check back soon!"}
+  }
+];
+
+const BIG = {
+  c1:"#3A1034", c2:"#E8407A", on:"#FFFFFF",
+  day:"From me to you", title:"The big letter",
+  letter:[
+    `Dear Gauru,`,
+    `[This is the big one. Start with how you feel right now, reading all of this back and knowing she’s about to get married.]`,
+    `[Then tell her what she means to you: the specific memories, the way she’s shown up for you, the things only you two know.]`,
+    `[Then tell her what you wish for her and Dhruv: the home, the laughter, the ordinary Tuesdays.]`,
+    `And one last thing: gauru ki ho gayi, wah bhai wah! I love you. I’m so happy for you. Go be unbelievably married.`
+  ],
+  sign:`Forever your person,\n[Your name]`
+};
+/* ==================================================================== */
+
+const $ = s => document.querySelector(s);
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const PALETTE = ["#E8407A","#FFB020","#7B3FBF","#0FA3A3","#FF6B4A","#FFFFFF"];
+
+/* Flower sprite */
+(function(){
+  const ell=(n,rx,ry,cy,fill)=>Array.from({length:n},(_,i)=>`<ellipse cx="50" cy="${cy}" rx="${rx}" ry="${ry}" transform="rotate(${i*360/n} 50 50)" fill="${fill}"/>`).join("");
+  const ring=(n,d,r,fill)=>Array.from({length:n},(_,i)=>{const a=i*2*Math.PI/n;return `<circle cx="${(50+d*Math.cos(a)).toFixed(2)}" cy="${(50+d*Math.sin(a)).toFixed(2)}" r="${r}" fill="${fill}"/>`}).join("");
+  const sym=(id,body)=>`<symbol id="${id}" viewBox="0 0 100 100">${body}</symbol>`;
+  const svg=`<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>`
+   + sym("daisy", ell(10,8,21,25,"var(--p,#fff)")+`<circle cx="50" cy="50" r="13" fill="var(--c,#FFC62E)"/>`)
+   + sym("rose5", ell(5,21,27,28,"var(--p,#E8407A)")+`<circle cx="50" cy="50" r="15" fill="var(--p2,#B01558)"/><circle cx="50" cy="50" r="6" fill="var(--c,#FFC62E)"/>`)
+   + sym("marigold", ring(14,34,13,"var(--p,#FFB020)")+ring(10,23,11,"var(--p2,#F58A00)")+ring(6,11,8,"var(--p3,#FFD23F)"))
+   + sym("leaf", `<path d="M50 96C18 70 18 26 50 4c32 22 32 66 0 92z" fill="var(--l,#2E8B57)"/><path d="M50 92V16" stroke="rgba(255,255,255,.45)" stroke-width="3" fill="none"/>`)
+   + `</defs></svg>`;
+  document.body.insertAdjacentHTML("afterbegin",svg);
+})();
+const use=(id,x,y,s,vars="",extra="")=>`<use href="#${id}" x="${x}" y="${y}" width="${s}" height="${s}" style="${vars}" ${extra}/>`;
+
+/* Top garland (tile) */
+(function(){
+  const fl=(cx,cy,r,p,c)=>{let s="";for(let i=0;i<6;i++){const a=i*Math.PI/3;s+=`<circle cx="${(cx+r*.62*Math.cos(a)).toFixed(1)}" cy="${(cy+r*.62*Math.sin(a)).toFixed(1)}" r="${(r*.5).toFixed(1)}" fill="${p}"/>`}return s+`<circle cx="${cx}" cy="${cy}" r="${(r*.42).toFixed(1)}" fill="${c}"/>`};
+  let s=`<svg xmlns="http://www.w3.org/2000/svg" width="140" height="118" viewBox="0 0 140 118">`;
+  s+=`<path d="M0 4H140" stroke="#2E8B57" stroke-width="4"/>`;
+  [[25,[["#E8407A","#FFE066"],["#FFB020","#F58A00"],["#E8407A","#FFE066"],["#fff","#FFB020"]]],[70,[["#7B3FBF","#FFE066"],["#FFB020","#F58A00"],["#fff","#E8407A"],["#FFB020","#F58A00"],["#E8407A","#FFE066"],["#7B3FBF","#FFE066"]]],[115,[["#FFB020","#F58A00"],["#E8407A","#FFE066"],["#fff","#FFB020"]]]].forEach(([x,fs])=>{
+    s+=`<path d="M${x} 4V${16+fs.length*17}" stroke="#2E8B57" stroke-width="2"/>`;
+    fs.forEach((f,i)=>{const y=18+i*17;s+=`<ellipse cx="${x+(i%2?9:-9)}" cy="${y+8}" rx="3.2" ry="6" fill="#3FA76A" transform="rotate(${i%2?40:-40} ${x+(i%2?9:-9)} ${y+8})"/>`+fl(x,y,9,f[0],f[1])});
+  });
+  s+=`</svg>`;
+  $("#garland").style.backgroundImage=`url("data:image/svg+xml,${encodeURIComponent(s)}")`;
+})();
+
+/* Bouquets, sticker, footer flowers */
+(function(){
+  const leaf=(x,y,w,h,rot,col)=>`<use href="#leaf" x="${x}" y="${y}" width="${w}" height="${h}" transform="rotate(${rot} ${x+w/2} ${y+h/2})" style="--l:${col}"/>`;
+  $("#bqL").innerHTML=`<svg viewBox="0 0 220 250">${leaf(100,26,44,96,25,"#3FA76A")}${leaf(18,112,44,96,-60,"#2E8B57")}${leaf(108,130,44,96,110,"#1F7A4A")}${leaf(60,0,44,96,-30,"#2E8B57")}${use("marigold",15,30,120)}${use("rose5",105,8,95,"--p:#E8407A;--p2:#B01558")}${use("daisy",70,125,85,"--p:#fff;--c:#FFB020")}${use("rose5",4,150,66,"--p:#7B3FBF;--p2:#4B1D87")}${use("daisy",150,112,56,"--p:#FFC1DA;--c:#E8407A")}</svg>`;
+  $("#bqR").innerHTML=`<svg viewBox="0 0 220 250">${leaf(100,26,44,96,25,"#2E8B57")}${leaf(18,112,44,96,-60,"#3FA76A")}${leaf(108,130,44,96,110,"#1F7A4A")}${leaf(60,0,44,96,-30,"#3FA76A")}${use("rose5",15,30,120,"--p:#FF6B4A;--p2:#C9381C")}${use("marigold",105,8,95)}${use("rose5",70,125,85,"--p:#0FA3A3;--p2:#066B6B;--c:#fff")}${use("daisy",4,150,66,"--p:#fff;--c:#7B3FBF")}${use("marigold",150,112,56,"--p:#E8407A;--p2:#B01558;--p3:#FFB020")}</svg>`;
+  /* sticker starburst */
+  const pts=[];for(let i=0;i<32;i++){const r=i%2?43:50,a=i*Math.PI/16;pts.push((50+r*Math.cos(a)).toFixed(1)+","+(50+r*Math.sin(a)).toFixed(1))}
+  $("#sticker").insertAdjacentHTML("afterbegin",`<svg viewBox="0 0 100 100"><polygon points="${pts.join(" ")}" fill="#FFB020" stroke="#3A1034" stroke-width="2.5" stroke-linejoin="round"/></svg>`);
+  /* floral row */
+  const types=[["marigold",""],["rose5","--p:#E8407A;--p2:#B01558"],["daisy","--p:#fff;--c:#FFB020"],["rose5","--p:#7B3FBF;--p2:#4B1D87"],["marigold","--p:#FF6B4A;--p2:#C9381C;--p3:#FFB020"]];
+  let row=`<svg viewBox="0 0 560 70"><path d="M0 40C90 10 190 70 280 40S470 10 560 40" fill="none" stroke="#2E8B57" stroke-width="3"/>`;
+  for(let i=0;i<9;i++){const x=16+i*58,y=40+(i%2?8:-8);row+=leaf(x+6,y-6,18,36,i%2?60:-60,"#3FA76A")+use(types[i%5][0],x-8,y-24,48,types[i%5][1])}
+  $("#floralRow").innerHTML=row+`</svg>`;
+})();
+
+/* Countdown flowers */
+(function(){
+  const defs=[["d","days","marigold",""],["h","hours","rose5","--p:#E8407A;--p2:#B01558"],["m","mins","daisy","--p:#fff;--c:#7B3FBF"],["s","secs","rose5","--p:#0FA3A3;--p2:#066B6B"]];
+  $("#countdown").innerHTML=defs.map(([k,l,id,v])=>`<div class="cd"><div class="bloom"><svg viewBox="0 0 100 100">${use(id,0,0,100,v)}</svg><span class="n" id="cd-${k}">0</span></div><span class="l">${l}</span></div>`).join("");
+  const pad=n=>String(n).padStart(2,"0");
+  const fmt=new Intl.DateTimeFormat(undefined,{weekday:"long",day:"numeric",month:"long"});
+  $("#when").textContent=`The big day: ${fmt.format(WEDDING)}`;
+  function tick(){
+    const diff=WEDDING-new Date();
+    if(diff<=0){document.body.classList.add("is-done");$("#when").textContent="";return}
+    const d=Math.floor(diff/864e5),h=Math.floor(diff%864e5/36e5),m=Math.floor(diff%36e5/6e4),s=Math.floor(diff%6e4/1e3);
+    $("#cd-d").textContent=d;$("#cd-h").textContent=pad(h);$("#cd-m").textContent=pad(m);$("#cd-s").textContent=pad(s);
+  }
+  tick();setInterval(tick,1000);
+})();
+
+/* Doors */
+const opened=new Set();
+try{JSON.parse(localStorage.getItem("gauru-doors")||"[]").forEach(n=>opened.add(n))}catch(e){}
+const saveOpened=()=>{try{localStorage.setItem("gauru-doors",JSON.stringify([...opened]))}catch(e){}};
+
+const crownPts=[[0,50],[6.7,25],[25,6.7],[50,0],[75,6.7],[93.3,25],[100,50]];
+const crownTypes=[["rose5","--p:var(--c1);--p2:var(--c2)"],["daisy","--p:#fff;--c:var(--c1)"],["marigold",""],["rose5","--p:#fff;--p2:var(--c1);--c:var(--c2)"],["marigold",""],["daisy","--p:#fff;--c:var(--c1)"],["rose5","--p:var(--c1);--p2:var(--c2)"]];
+const crown=()=>`<svg class="crown" viewBox="0 0 100 50" aria-hidden="true">${crownPts.map(([x,y],i)=>use(crownTypes[i][0],x-8.5,y-8.5,17,crownTypes[i][1])).join("")}</svg>`;
+
+$("#doors").innerHTML=DAYS.map((d,i)=>`
+  <button class="door ${opened.has(i)?"opened":""}" data-i="${i}" style="--c1:${d.c1};--c2:${d.c2}" aria-label="Open the ${d.day} door: ${d.title}">
+    <span class="archwrap">
+      <span class="arch"><span class="glow"><svg viewBox="0 0 100 100" aria-hidden="true">${use(d.bloom[0],0,0,100,d.bloom[1])}</svg></span><span class="leaf l"></span><span class="leaf r"></span></span>
+      ${crown()}
+    </span>
+    <span class="plaque"><span class="dayname">${d.day}</span><span class="title">${d.title}</span></span>
+  </button>`).join("");
+
+/* Dialog content */
+const dlg=$("#dlg"),sheet=$("#sheet");
+let lastBtn=null;
+const enc=encodeURIComponent;
+const spotifyUrl=(t,a)=>`https://open.spotify.com/search/${enc(t+" "+a)}`;
+const ytUrl=(t,a)=>`https://www.youtube.com/results?search_query=${enc(t+" "+a)}`;
+
+function posterFace(s,i){
+  return `<div class="face f${i}" style="--c1:${s.c1};--c2:${s.c2}">
+    <span class="rating">${s.rating}</span>
+    <div class="art"><svg viewBox="0 0 200 90" preserveAspectRatio="xMidYMid meet">${s.art}</svg></div>
+    <h4 class="ptitle">${s.title}</h4>
+    <p class="ptag">${s.tagline}</p>
+    <div class="review"><span class="stars" aria-label="Five stars">★★★★★</span><p>“${s.review.quote}”</p><span class="critic">${s.review.critic}</span></div>
+    <p class="credits">${s.cast}. ${s.director}.</p>
+  </div>`;
+}
+
+function extraHTML(x){
+  if(x.kind==="poster"){
+    return `<div class="poster-ui">
+      <div class="seg" role="group" aria-label="Poster version">${x.states.map((s,i)=>`<button class="segbtn" data-poster="${i}" aria-pressed="${i===0}">${s.label}</button>`).join("")}</div>
+      <div class="poster-stage" data-state="0"><div class="poster-inner">${x.states.map(posterFace).join("")}</div></div>
+      <p class="tapnote">Tap the poster to flip it.</p>
+    </div>`;
+  }
+  if(x.kind==="award"){
+    return `<div class="award-card">
+      <svg viewBox="0 0 100 140" aria-hidden="true"><defs><linearGradient id="gld" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF3B0"/><stop offset=".5" stop-color="#FFD23F"/><stop offset="1" stop-color="#E09A00"/></linearGradient></defs><polygon points="50,6 60,31 87,33 66,50 73,76 50,62 27,76 34,50 13,33 40,31" fill="url(#gld)" stroke="#3A1034" stroke-width="3" stroke-linejoin="round"/><rect x="44" y="76" width="12" height="28" fill="url(#gld)" stroke="#3A1034" stroke-width="3"/><rect x="26" y="104" width="48" height="12" rx="3" fill="url(#gld)" stroke="#3A1034" stroke-width="3"/><rect x="18" y="116" width="64" height="16" rx="4" fill="url(#gld)" stroke="#3A1034" stroke-width="3"/></svg>
+      <div><span class="a1">${x.award}</span><span class="a2">${x.line}</span></div>
+    </div>
+    <div class="note-card"><span class="from">${x.from}</span><p>${x.note}</p></div>`;
+  }
+  if(x.kind==="playlist"){
+    return `<ol class="tracks">${x.items.map(t=>`<li><span class="vinyl" aria-hidden="true"></span><div><span class="tn">${t.title}</span><span class="ta">${t.artist}</span><p class="tw">${t.why}</p></div><a class="play" href="${t.link||ytUrl(t.title,t.artist)}" target="_blank" rel="noopener" aria-label="Play ${t.title}">Play</a></li>`).join("")}</ol>`;
+  }
+  if(x.kind==="promises"){
+    return `<ul class="promises">${x.items.map((p,k)=>`<li><svg viewBox="0 0 100 100" aria-hidden="true">${use(k%2?"daisy":"rose5",0,0,100,k%2?"--p:#FFB020;--c:#E8407A":"--p:#E8407A;--p2:#B01558")}</svg><span>${p}</span></li>`).join("")}</ul>
+      <div class="signoff"><span class="sig">${x.sign}</span><span class="stamp">Friend for life</span></div>`;
+  }
+  if(x.kind==="video"){
+    let inner;
+    if(VIDEO_SRC) inner=`<video controls playsinline preload="metadata" src="${VIDEO_SRC}"></video>`;
+    else if(VIDEO_LINK) inner=`<div class="screen-msg"><strong>Lights, camera, Gauru!</strong><a class="watch" href="${VIDEO_LINK}" target="_blank" rel="noopener">Watch my video</a></div>`;
+    else inner=`<div class="screen-msg"><strong>Coming soon</strong>${x.placeholder}</div>`;
+    return `<div class="screen">${VIDEO_SRC?"":`<span class="curtain l"></span><span class="curtain r"></span>`}${inner}</div>`;
+  }
+  return "";
+}
+
+function headFlowers(){
+  return `<svg class="head-flowers" viewBox="0 0 160 120" aria-hidden="true">${use("daisy",70,10,70,"--p:#fff;--c:#FFB020")}${use("rose5",10,40,70,"--p:#fff;--p2:#FFB020;--c:#E8407A")}${use("marigold",85,52,66)}</svg>`;
+}
+
+function show(i){
+  const d=DAYS[i];
+  sheet.style.setProperty("--c1",d.c1);sheet.style.setProperty("--c2",d.c2);sheet.style.setProperty("--on",d.on);
+  const s=d.song,last=i===DAYS.length-1;
+  sheet.innerHTML=`
+    <div class="sheet-head">${headFlowers()}
+      <span class="d">${d.day}</span>
+      <span class="t" id="dlg-title">${d.title}</span>
+      <button class="close" data-close aria-label="Close">&times;</button>
+    </div>
+    <div class="sheet-body">
+      <section class="sec letter"><h3>A tiny letter</h3>${d.letter.map(p=>`<p>${p}</p>`).join("")}<p class="sign">${d.sign}</p></section>
+      <section class="sec"><h3>Today’s song</h3>
+        <div class="song"><span class="name">${s.title}</span><span class="by">${s.artist}</span><p class="why">${s.why}</p>
+          <div class="pills"><a class="pill fill" href="${s.spotify||spotifyUrl(s.title,s.artist)}" target="_blank" rel="noopener">Listen on Spotify</a><a class="pill line" href="${s.youtube||ytUrl(s.title,s.artist)}" target="_blank" rel="noopener">Listen on YouTube</a></div>
+        </div>
+      </section>
+      <section class="sec extra"><h3>${d.extra.title}</h3>${extraHTML(d.extra)}</section>
+    </div>
+    <div class="sheet-foot">${last?`<button class="next quiet" data-big>Read the big letter</button>`:`<button class="next" data-next="${i+1}">Open the next door</button>`}</div>`;
+  dlg.showModal();sheet.scrollTop=0;
+}
+
+function showBig(){
+  sheet.style.setProperty("--c1",BIG.c1);sheet.style.setProperty("--c2",BIG.c2);sheet.style.setProperty("--on",BIG.on);
+  sheet.innerHTML=`
+    <div class="sheet-head">${headFlowers()}
+      <span class="d">${BIG.day}</span>
+      <span class="t" id="dlg-title">${BIG.title}</span>
+      <button class="close" data-close aria-label="Close">&times;</button>
+    </div>
+    <div class="sheet-body"><section class="sec letter big">${BIG.letter.map(p=>`<p>${p}</p>`).join("")}<p class="sign">${BIG.sign}</p></section></div>
+    <div class="sheet-foot"><button class="next quiet" data-close>Close</button></div>`;
+  dlg.showModal();sheet.scrollTop=0;
+}
+
+/* Petals */
+function burst(el){
+  if(reduceMotion)return;
+  const r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height*.35,box=$("#petals");
+  for(let k=0;k<30;k++){
+    const p=document.createElement("span");p.className="petal";
+    const w=8+Math.random()*10;
+    p.style.cssText=`left:${cx}px;top:${cy}px;width:${w}px;height:${w*1.2}px;background:${PALETTE[k%PALETTE.length]}`;
+    box.appendChild(p);
+    const dx=(Math.random()-.5)*340,dy=80+Math.random()*260,rot=(Math.random()-.5)*720;
+    p.animate([{transform:"translate(0,0) rotate(0deg)",opacity:1},{transform:`translate(${dx*.6}px,${-60-Math.random()*50}px) rotate(${rot*.4}deg)`,opacity:1,offset:.3},{transform:`translate(${dx}px,${dy}px) rotate(${rot}deg)`,opacity:0}],{duration:1200+Math.random()*900,easing:"cubic-bezier(.2,.7,.4,1)"}).onfinish=()=>p.remove();
+  }
+}
+
+function openDoor(i){
+  const btn=document.querySelector(`.door[data-i="${i}"]`);
+  lastBtn=btn;
+  if(!opened.has(i)){
+    btn.classList.add("opened");opened.add(i);saveOpened();
+    burst(btn.querySelector(".arch"));
+    setTimeout(()=>show(i),reduceMotion?0:700);
+  } else show(i);
+}
+
+function setPoster(n){
+  const st=sheet.querySelector(".poster-stage");if(!st)return;
+  st.dataset.state=n;
+  sheet.querySelectorAll("[data-poster]").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.poster===n)));
+}
+
+$("#doors").addEventListener("click",e=>{const b=e.target.closest(".door");if(b)openDoor(+b.dataset.i)});
+$("#envBtn").addEventListener("click",e=>{lastBtn=$("#envBtn");burst($("#envBtn .env-art"));setTimeout(showBig,reduceMotion?0:450)});
+sheet.addEventListener("click",e=>{
+  if(e.target.closest("[data-close]")){dlg.close();return}
+  const n=e.target.closest("[data-next]");if(n){dlg.close();openDoor(+n.dataset.next);return}
+  if(e.target.closest("[data-big]")){dlg.close();lastBtn=$("#envBtn");showBig();return}
+  const p=e.target.closest("[data-poster]");if(p){setPoster(+p.dataset.poster);return}
+  if(e.target.closest(".poster-stage")){const st=sheet.querySelector(".poster-stage");setPoster(st.dataset.state==="0"?1:0)}
+});
+dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
+dlg.addEventListener("close",()=>{if(lastBtn)lastBtn.focus({preventScroll:true})});
+
+/* Background music */
+(function(){
+  if(!BG_SONG)return;
+  const audio=$("#bg"),btn=$("#music");
+  audio.src=BG_SONG;btn.hidden=false;
+  let wanted=true;
+  const sync=()=>btn.setAttribute("aria-pressed",String(!audio.paused));
+  audio.addEventListener("play",sync);audio.addEventListener("pause",sync);
+  const first=e=>{
+    if(e.target.closest("#music"))return;
+    document.removeEventListener("pointerdown",first);
+    if(wanted){const pr=audio.play();if(pr&&pr.catch)pr.catch(()=>{})}
+  };
+  document.addEventListener("pointerdown",first);
+  btn.addEventListener("click",()=>{
+    if(audio.paused){wanted=true;const pr=audio.play();if(pr&&pr.catch)pr.catch(()=>{})}
+    else{wanted=false;audio.pause()}
+  });
+  sync();
+})();
+</script>
+</body>
+</html>
