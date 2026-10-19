@@ -219,10 +219,19 @@ dialog::backdrop{background:rgba(40,8,46,.78);backdrop-filter:blur(3px)}
 .credits{margin:.3rem 0 0;font-size:.78rem;line-height:1.3;opacity:.95}
 .tapnote{margin:0;font-size:.92rem;color:var(--ink-soft)}
 
+/* Photo */
+.photo{margin:0;display:grid;justify-items:center;gap:1.1rem}
+.photo .frame{position:relative;width:min(360px,92%);transform:rotate(-1.5deg)}
+.photo img{display:block;width:100%;height:auto;border:.7rem solid #fff;border-bottom-width:2rem;border-radius:6px;box-shadow:0 8px 0 rgba(58,16,52,.25);background:#fff}
+.photo .fl{position:absolute;width:70px;height:70px;pointer-events:none;overflow:visible}
+.photo .fl.a{left:-22px;top:-22px}
+.photo .fl.b{right:-20px;bottom:-12px}
+.photo figcaption{font-family:var(--hand);font-size:1.22rem;line-height:1.65;text-align:left;width:100%}
+
 /* Award */
 .award-card{display:flex;align-items:center;gap:1rem;padding:1rem 1.1rem;border-radius:16px;background:linear-gradient(135deg,#FFE9A8,#FFB020);border:3px solid #fff;box-shadow:0 6px 0 #C9830A;color:var(--plum)}
 .award-card svg{width:68px;height:auto;flex:none}
-.award-card .a1{display:block;font-family:var(--display);font-size:1.6rem;line-height:1.05}
+.award-card .a1{display:block;font-family:var(--display);font-size:1.35rem;line-height:1.1}
 .award-card .a2{display:block;margin-top:.25rem;font-family:var(--hand);font-size:1.15rem}
 .note-card{margin-top:1.1rem;padding:1rem 1.1rem;border-radius:14px;background:#fff;border:2px dashed var(--rani);transform:rotate(-.8deg)}
 .note-card .from{display:block;font-weight:800;font-size:.98rem;color:var(--rani)}
@@ -322,9 +331,9 @@ dialog::backdrop{background:rgba(40,8,46,.78);backdrop-filter:blur(3px)}
    Everything in [square brackets] is a placeholder to replace.
    ==================================================================== */
 const WEDDING    = new Date("2026-10-24T10:00:00");
-const BG_SONG    = "";   // e.g. "data:audio/mpeg;base64,...."  (keep the whole page under 16 MB)
-const VIDEO_SRC  = "";
-const VIDEO_LINK = "";
+const BG_SONG    = "Y2Mate.st%20-%20Ullam%20Paadum%20-%202%20States%20-%20Theme%20Song.mp3";
+const VIDEO_SRC  = "";   // when your video is in the repo, e.g. "video.mp4"
+const VIDEO_LINK = "";   // or a link to the video
 
 const DAYS = [
   {
@@ -332,79 +341,70 @@ const DAYS = [
     c1:"#E8407A", c2:"#B01558", on:"#FFFFFF", bloom:["marigold",""],
     letter:[
       `Dear Gauru,`,
-      `Plot twist! You’re getting married, and I have been told to act normal about it. I will not be acting normal. [One line about the day you met, or the moment you knew Dhruv was the one.]`
+      `In 2022 we started working together on Launchpad, and life has not been the same since. We were more than colleagues from day one.`,
+      `Plot twist: you’re getting married, and I get to be there. Below is a photo I always come back to.`
     ],
-    sign:`Love,\n[Your name]`,
-    song:{title:"Tujhe Dekha To Yeh Jaana Sanam", artist:"Kumar Sanu & Lata Mangeshkar", why:`[Why this one? Maybe it’s the song you’ve been humming since Dhruv showed up.]`},
-    extra:{kind:"poster", title:"Now showing, in two versions", states:[
-      {label:"Before", c1:"#0FA3A3", c2:"#7B3FBF", title:"Gauru", tagline:"Single. Dramatic. Always ten minutes late.", rating:"Rated A for Aunties",
-       cast:"Starring Gauru as Gauru", director:"Directed by Destiny",
-       review:{quote:"I laughed, I cried, I ate three samosas. Ten out of five stars.", critic:"A Very Biased Critic, The Daily Chai"},
-       art:`<use href="#leaf" x="62" y="-4" width="40" height="86" transform="rotate(-40 82 40)" style="--l:#7FE3B0"/><use href="#leaf" x="104" y="-4" width="40" height="86" transform="rotate(40 124 40)" style="--l:#7FE3B0"/><use href="#marigold" x="58" y="-2" width="90" height="90"/>`},
-      {label:"After", c1:"#FF6B4A", c2:"#E8407A", title:"Gauru & Dhruv", tagline:"Same drama. Better snacks. Now with a co-star.", rating:"Rated U for Unlimited love",
-       cast:"Starring Gauru and Dhruv", director:"Directed by Destiny and two very pushy aunties",
-       review:{quote:"Two hearts, zero chill, one perfect plot. I would watch this a hundred times, with popcorn and tissues.", critic:"The Daily Chai, again"},
-       art:`<use href="#leaf" x="82" y="6" width="36" height="76" transform="rotate(-70 100 44)" style="--l:#FFE9A8"/><use href="#leaf" x="82" y="6" width="36" height="76" transform="rotate(70 100 44)" style="--l:#FFE9A8"/><use href="#rose5" x="30" y="0" width="80" height="80" style="--p:#fff;--p2:#FFB020;--c:#E8407A"/><use href="#marigold" x="92" y="2" width="82" height="82"/>`}
-    ]}
+    sign:`With all my love,\nSaranya`,
+    song:{title:"Saajan Ji Ghar Aaye", artist:"Alka Yagnik", why:""},
+    extra:{kind:"photo", title:"A picture I always come back to", src:"Photo1.jpeg", alt:"Gauri and Dhruv",
+      caption:`A picture I always come back to, especially because I got to click it (hehe). This is how I see you both: dressed impeccably, giggling, and supporting each other through everything. Nazar na lage!`}
   },
   {
     day:"Tuesday", title:"Arre, kab tak jawaani chupaogi rani?",
     c1:"#7B3FBF", c2:"#4B1D87", on:"#FFFFFF", bloom:["rose5","--p:#FFB020;--p2:#F58A00"],
     letter:[
       `Dear Gauru,`,
-      `Badtameez dil, badtameez friend. [One affectionate roast: her worst habit, her most dramatic moment.] But you’re also the person who [one true, sweet thing]. Both things can be true.`
+      `Everyone meets the sunshine first, and it’s real. But the more I got to know you, the more I saw: the most diligent, hardworking, generous person I know. Someone who is so clear about her strengths, so firm about her boundaries, and plays her cards so well. You’ve inspired me more than you know.`,
+      `So today, you’re getting an award. I’m a biased judge, but I stand by it.`
     ],
-    sign:`Yours, rudely,\n[Your name]`,
-    song:{title:"Badtameez Dil", artist:"Benny Dayal", why:`[Because you’ve been a bit badtameez since forever, and I wouldn’t change it.]`},
+    sign:`Yours,\nSaranya`,
+    song:{title:"Arre kab tak jawaani chupaogi rani", artist:"", why:""},
     extra:{kind:"award", title:"And the award goes to…",
-      award:"Best Bride Ever", line:"The winner is Gauru. The jury was me, and I was biased.",
+      award:"Best Bride, Friend, Daughter, Team Member & Everything Ever",
+      line:"The winner is Gauri Parate: for having a heart of gold, standards of platinum, and the audacity to be right approximately 97% of the time.",
       from:"A note from a very famous bride (name withheld for legal reasons)",
-      note:`Dear Gauru, I have walked down many aisles on screen, and none of them were as fabulous as yours is going to be. Own the room, enjoy every second, and remember that the best entrance is the one with a tiny bit of drama. Congratulations!`}
+      note:`Dear Gauru, I’ve seen a lot of brides, and the best ones already know exactly who they are. You do. Walk in like it’s yours, because it is. Congratulations!`}
   },
   {
     day:"Wednesday", title:"Bole Chudiyan, Bole Kangna",
     c1:"#FFB020", c2:"#F27D00", on:"#3A1034", bloom:["daisy","--p:#fff;--c:#E8407A"],
     letter:[
       `Dear Gauru,`,
-      `Today’s mission: hype you up until your cheeks hurt. [Something that makes her completely unstoppable.] Nobody walks into a room like you do, and nobody leaves it the same.`
+      `We’ve done everything together: getting our nails done, watching movies, playing quizzes, discussing dates, and welcoming the new year at a party. We talk so fast that people ask us to slow down, and we speak in Bollywood metaphors that take everyone else a while to follow. You understand me so quickly, and I love every minute of it.`
     ],
-    sign:`Loudly yours,\n[Your name]`,
-    song:{title:"London Thumakda", artist:"Labh Janjua, Sonu Kakkar & Neha Kakkar", why:`[The song that makes us both lose all dignity on the dance floor.]`},
-    extra:{kind:"playlist", title:"Songs that remind me of Gauru", items:[
-      {title:"Kala Chashma", artist:"Amar Arshi, Badshah & Neha Kakkar", why:`[Why it reminds you of her]`},
-      {title:"Ghagra", artist:"Rekha Bhardwaj & Farhan Akhtar", why:`[Why it reminds you of her]`},
-      {title:"Ilahi", artist:"Arijit Singh", why:`[Why it reminds you of her]`},
-      {title:"Senorita", artist:"Farhan Akhtar, Hrithik Roshan & Abhay Deol", why:`[Why it reminds you of her]`},
-      {title:"Channa Mereya", artist:"Arijit Singh", why:`[Why it reminds you of her]`},
-      {title:"Gallan Goodiyaan", artist:"Shankar Mahadevan, Farhan Akhtar & more", why:`[Why it reminds you of her]`}
-    ]}
+    sign:`Love,\nSaranya`,
+    song:{title:"Bole Chudiyan", artist:"from Kabhi Khushi Kabhie Gham", why:""},
+    extra:{kind:"playlist", title:"Songs that remind me of Gauru", items:[]}
   },
   {
     day:"Thursday", title:"Cutiepieee, aaye haaye",
     c1:"#0FA3A3", c2:"#066B6B", on:"#FFFFFF", bloom:["rose5","--p:#fff;--p2:#FFB020;--c:#0FA3A3"],
     letter:[
       `Dear Gauru,`,
-      `Yeh dosti, hum nahin todenge. And now there are legal documents to prove it. [One line about how long you’ve been friends and what that has meant to you.]`
+      `You were the first person I told about my heartbreaks, and the first person I told when things got hard. The first person I went to a New Year’s party with, the first person I got my nails done with, the first person I interviewed team members with. You’ve seen me angry, sad, irritated and happy.`,
+      `Through new teams, new managers, even a new-looking office, you were next to me. I honestly don’t know how I would have made it without you. That’s not an exaggeration.`
     ],
-    sign:`Your friend for life,\n[Your name]`,
-    song:{title:"Yeh Dosti Hum Nahin Todenge", artist:"Kishore Kumar & Manna Dey", why:`[The anthem for the two of us, obviously.]`},
+    sign:`Your friend for life,\nSaranya`,
+    song:{title:"Cutiepie", artist:"from Ae Dil Hai Mushkil", why:""},
     extra:{kind:"promises", title:"Promises I make as a friend for life", items:[
-      `I will always pick up your 2am calls, even if it’s just to scream.`,
-      `I will tell you the truth about the outfit. Gently. Probably.`,
-      `I will carry your shoes when your feet give up.`,
-      `[Add your own promise here.]`,
-      `I will be the loudest person clapping for you, always.`
-    ], sign:`Signed,\n[Your name]`}
+      `I will always be your first call, the way you’ve been mine.`,
+      `I will show up, even when it’s inconvenient, and never make a big deal of it.`,
+      `I will celebrate your wins as loudly as if they were mine.`,
+      `I will be honest with you, always kindly.`,
+      `I will make time for chai, wherever in the world we are.`,
+      `I will make up for every birthday and party I’ve missed.`
+    ], sign:`Signed,\nSaranya`}
   },
   {
     day:"Friday", title:"Aaj (well,kal) mere yaar ki shaadi hai!",
     c1:"#FF6B4A", c2:"#C9381C", on:"#FFFFFF", bloom:["marigold","--p:#E8407A;--p2:#B01558;--p3:#FFB020"],
     letter:[
       `Dear Gauru,`,
-      `The wedding is nearly here, and I’m a mess in the best way. There’s a video from me below, and I’m sorry in advance for my face. [One last line, just for today.]`
+      `I’ve missed a lot from far away: your engagement, your parties, your birthdays, your new home. So being at your wedding means more to me than I can say. It is the best thing that has happened to me this year.`,
+      `There’s a video from me below. I can’t wait to celebrate you.`
     ],
-    sign:`Crying already,\n[Your name]`,
-    song:{title:"Tum Hi Ho", artist:"Arijit Singh", why:`[The one that makes me cry every single time. Don’t judge me.]`},
+    sign:`With all my love,\nSaranya`,
+    song:{title:"Aaj Mere Yaar Ki Shaadi Hai", artist:"", why:""},
     extra:{kind:"video", title:"A video from me", placeholder:"My video is coming tonight. Check back soon!"}
   }
 ];
@@ -414,12 +414,17 @@ const BIG = {
   day:"From me to you", title:"The big letter",
   letter:[
     `Dear Gauru,`,
-    `[This is the big one. Start with how you feel right now, reading all of this back and knowing she’s about to get married.]`,
-    `[Then tell her what she means to you: the specific memories, the way she’s shown up for you, the things only you two know.]`,
-    `[Then tell her what you wish for her and Dhruv: the home, the laughter, the ordinary Tuesdays.]`,
-    `And one last thing: gauru ki ho gayi, wah bhai wah! I love you. I’m so happy for you. Go be unbelievably married.`
+    `I’ve been trying to write this for days, and I still don’t think I have the right words. So I’ll just say it plainly.`,
+    `We met in 2022, working on Launchpad, and life has not been the same since. You were my colleague, my mentor, my partner in complaining about work, and somewhere along the way you became my person. Through new teams, new managers and a new-looking office, you were next to me. I honestly don’t know how I would have made it through those years without you. I’m not being dramatic. It’s just true.`,
+    `Everyone who meets you sees the sunshine first, and it’s real. But you are so much more. You’re the most diligent, generous person I know, someone who is clear about her strengths, firm about her boundaries, and wise about people. I’ve learned so much just from watching you.`,
+    `I think of your chai. I think of your old house and the warmth it gave me on nights that felt cold. I think of Amul, and winding down after long days. And I think of one morning, after a terrible night, when you were the only person I wanted to see. I went straight to your door, and you took care of me without ever making it a big deal. You were home, and love, and safety. I will never forget that.`,
+    `I’ve missed so much from far away: your engagement, your parties, your birthdays, your new home. So being at your wedding is the best thing that has happened to me this year.`,
+    `And Dhruv. He’s joyful, silly and kind, and he makes the rest of us look bad at Bollywood and quizzes. He has made you feel secure, loved and confident, and I’m so glad you’ll be with someone who will take care of you with nothing but love. It’s exactly what you deserve.`,
+    `Here’s what I wish for you both. A home full of laughter, plants, cats and songs. Dancing together in the middle of the night. Chai on Sunday mornings and long talks about life. Growing old together, getting smarter, kinder and richer, becoming the powerhouse you already are.`,
+    `And when London feels far from home, I’ll know there’s a house I can go to for warmth and joy. I can’t wait to see the life you build.`,
+    `Gauru ki ho gayi. Wah bhai wah. I love you.`
   ],
-  sign:`Forever your person,\n[Your name]`
+  sign:`Forever yours,\nSaranya`
 };
 /* ==================================================================== */
 
@@ -523,6 +528,9 @@ function posterFace(s,i){
 }
 
 function extraHTML(x){
+  if(x.kind==="photo"){
+    return `<figure class="photo"><div class="frame"><img src="${x.src}" alt="${x.alt}"><svg class="fl a" viewBox="0 0 100 100" aria-hidden="true">${use("marigold",0,0,100)}</svg><svg class="fl b" viewBox="0 0 100 100" aria-hidden="true">${use("rose5",0,0,100,"--p:#E8407A;--p2:#B01558")}</svg></div><figcaption>${x.caption}</figcaption></figure>`;
+  }
   if(x.kind==="poster"){
     return `<div class="poster-ui">
       <div class="seg" role="group" aria-label="Poster version">${x.states.map((s,i)=>`<button class="segbtn" data-poster="${i}" aria-pressed="${i===0}">${s.label}</button>`).join("")}</div>
@@ -538,6 +546,7 @@ function extraHTML(x){
     <div class="note-card"><span class="from">${x.from}</span><p>${x.note}</p></div>`;
   }
   if(x.kind==="playlist"){
+    if(!x.items.length) return `<p>My songs for you are on their way…</p>`;
     return `<ol class="tracks">${x.items.map(t=>`<li><span class="vinyl" aria-hidden="true"></span><div><span class="tn">${t.title}</span><span class="ta">${t.artist}</span><p class="tw">${t.why}</p></div><a class="play" href="${t.link||ytUrl(t.title,t.artist)}" target="_blank" rel="noopener" aria-label="Play ${t.title}">Play</a></li>`).join("")}</ol>`;
   }
   if(x.kind==="promises"){
@@ -571,7 +580,7 @@ function show(i){
     <div class="sheet-body">
       <section class="sec letter"><h3>A tiny letter</h3>${d.letter.map(p=>`<p>${p}</p>`).join("")}<p class="sign">${d.sign}</p></section>
       <section class="sec"><h3>Today’s song</h3>
-        <div class="song"><span class="name">${s.title}</span><span class="by">${s.artist}</span><p class="why">${s.why}</p>
+        <div class="song"><span class="name">${s.title}</span>${s.artist?`<span class="by">${s.artist}</span>`:""}${s.why?`<p class="why">${s.why}</p>`:""}
           <div class="pills"><a class="pill fill" href="${s.spotify||spotifyUrl(s.title,s.artist)}" target="_blank" rel="noopener">Listen on Spotify</a><a class="pill line" href="${s.youtube||ytUrl(s.title,s.artist)}" target="_blank" rel="noopener">Listen on YouTube</a></div>
         </div>
       </section>
