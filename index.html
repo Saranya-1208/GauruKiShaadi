@@ -219,6 +219,32 @@ dialog::backdrop{background:rgba(40,8,46,.78);backdrop-filter:blur(3px)}
 .credits{margin:.3rem 0 0;font-size:.78rem;line-height:1.3;opacity:.95}
 .tapnote{margin:0;font-size:.92rem;color:var(--ink-soft)}
 
+/* Quiz */
+.quiz{display:grid;gap:1rem}
+.qprog{margin:0;font-weight:600;font-size:.98rem;color:var(--ink-soft)}
+.qtext{margin:0;font-family:var(--display);font-size:1.4rem;line-height:1.25}
+.qlabel{font-weight:600;font-size:.98rem;color:var(--ink-soft)}
+.qin{width:100%;padding:.8rem 1rem;border-radius:12px;border:2px solid var(--line);background:#fff;color:#3A1034;font:inherit;font-size:1.15rem}
+.qin:focus{outline:3px solid var(--rani);outline-offset:2px;border-color:var(--rani)}
+.qres{padding:.9rem 1rem;border-radius:14px;border:2px solid}
+.qres.right{border-color:#2E8B57;background:rgba(46,139,87,.16)}
+.qres.wrong{border-color:var(--rani);background:rgba(232,64,122,.12)}
+.qv{display:block;font-family:var(--display);font-size:1.3rem}
+.qa{display:block;margin-top:.2rem;font-family:var(--hand);font-size:1.25rem}
+.qfb{margin:0;font-family:var(--hand);font-size:1.25rem;line-height:1.5}
+.qscore{margin:0;font-family:var(--display);font-size:2.4rem;color:var(--rani)}
+.qact{display:flex;justify-content:flex-end}
+
+/* Comic page */
+.cpage{width:min(460px,100%);margin:0 auto;padding:10px;background:#FFF4D6;border:5px solid #1a1a1a;box-shadow:8px 8px 0 #1a1a1a;color:#1a1a1a}
+.cpage .pic{position:relative;border:4px solid #1a1a1a;overflow:hidden;background:#ddd}
+.cpage .pic img{display:block;width:100%;height:auto;filter:saturate(1.12) contrast(1.04)}
+.cpage .pic::after{content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;background:radial-gradient(circle,rgba(26,26,26,.35) 1.2px,transparent 1.6px) 0 0/7px 7px;-webkit-mask-image:radial-gradient(circle,transparent 52%,#000 100%);mask-image:radial-gradient(circle,transparent 52%,#000 100%)}
+.cpage .poem{position:relative;z-index:2;margin:-26px 8px 0;padding:1rem 1.1rem 1.05rem;background:#FFD23F;border:4px solid #1a1a1a;box-shadow:5px 5px 0 #1a1a1a;font-family:var(--hand);font-size:1.12rem;line-height:1.6;color:#1a1a1a}
+.cpage .poem p{margin:0 0 .85rem;font-family:var(--hand);font-size:1.12rem;line-height:1.6;color:#1a1a1a}
+.cpage .poem p:last-of-type{margin-bottom:0}
+.cpage .poem .note{margin-top:1rem;padding-top:.7rem;border-top:3px dotted #1a1a1a;font-size:1rem;line-height:1.5}
+
 /* Photo */
 .photo{margin:0;display:grid;justify-items:center;gap:1.1rem}
 .photo .frame{position:relative;width:min(360px,92%);transform:rotate(-1.5deg)}
@@ -335,6 +361,24 @@ const BG_SONG    = "Y2Mate.st%20-%20Ullam%20Paadum%20-%202%20States%20-%20Theme%
 const VIDEO_SRC  = "";   // when your video is in the repo, e.g. "video.mp4"
 const VIDEO_LINK = "";   // or a link to the video
 
+/* Door 5: the comic poster. Upload this image to the repo with exactly this name. */
+const COMIC_IMG = "comic.jpeg";
+
+/* Door 3: the memory quiz. She types a guess, then reveals the answer.
+   a = the real answer, accept = words that count as correct (lowercase). */
+const QUIZ = [
+  {q:`Which movie were we going to watch when the group “Aye Meri Zohrajabeen” was created?`,
+   a:"Dune 2", accept:["dune"]},
+  {q:`How many photos exist of us sitting under a table at NSRCEL?`,
+   a:"4", accept:["4","four"]},
+  {q:`When was the first time we spoke on stage together?`,
+   a:"Summit Up 2024", accept:["summit up","summitup"]},
+  {q:`Which movie did we watch when you first came to my Whitefield home for a sleepover?`,
+   a:"Ek Tha Tiger", accept:["ek tha tiger"]}
+];
+const QUIZ_PERFECT = `You remember everything. I knew you would.`;
+const QUIZ_OTHER   = `A few of those got hazy, but that’s okay. The good ones are still ours.`;
+
 const DAYS = [
   {
     day:"Monday", title:"Sajan Ji Ghar Aaye",
@@ -342,7 +386,7 @@ const DAYS = [
     letter:[
       `Dear Gauru,`,
       `In 2022 we started working together on Launchpad, and life has not been the same since. We were more than colleagues from day one.`,
-      `Ab teri shaadi hai re gauriiii, and I get to be there to witness all the magic and masti. I could not have asked for anything to make this year better!`
+      `Plot twist: you’re getting married, and I get to be there. Below is a photo I always come back to.`
     ],
     sign:`With all my love,\nSaranya`,
     song:{title:"Saajan Ji Ghar Aaye", artist:"Alka Yagnik", why:""},
@@ -370,11 +414,12 @@ const DAYS = [
     c1:"#FFB020", c2:"#F27D00", on:"#3A1034", bloom:["daisy","--p:#fff;--c:#E8407A"],
     letter:[
       `Dear Gauru,`,
-      `We’ve done everything together: getting our nails done, watching movies, playing quizzes, discussing dates, and welcoming the new year at a party. We talk so fast that people ask us to slow down, and we speak in Bollywood metaphors that take everyone else a while to follow. You understand me so quickly, and I love every minute of it.`
+      `We’ve done everything together: getting our nails done, watching movies, playing quizzes, discussing dates, and welcoming the new year at a party. We talk so fast that people ask us to slow down, and we speak in Bollywood metaphors that take everyone else a while to follow. You understand me so quickly, and I love every minute of it.`,
+      `Below is a tiny quiz about us. Let’s see how much you remember.`
     ],
     sign:`Love,\nSaranya`,
     song:{title:"Bole Chudiyan", artist:"from Kabhi Khushi Kabhie Gham", why:""},
-    extra:{kind:"playlist", title:"Songs that remind me of Gauru", items:[]}
+    extra:{kind:"quiz", title:"A tiny quiz about us"}
   },
   {
     day:"Thursday", title:"Cutiepieee, aaye haaye",
@@ -401,11 +446,11 @@ const DAYS = [
     letter:[
       `Dear Gauru,`,
       `I’ve missed a lot from far away: your engagement, your parties, your birthdays, your new home. So being at your wedding means more to me than I can say. It is the best thing that has happened to me this year.`,
-      `There’s a video from me below. I can’t wait to celebrate you.`
+      `There’s a little comic page for you below. I can’t wait to celebrate you.`
     ],
     sign:`With all my love,\nSaranya`,
     song:{title:"Aaj Mere Yaar Ki Shaadi Hai", artist:"", why:""},
-    extra:{kind:"video", title:"A video from me", placeholder:"My video is coming tonight. Check back soon!"}
+    extra:{kind:"comic", title:""}
   }
 ];
 
@@ -528,6 +573,16 @@ function posterFace(s,i){
 }
 
 function extraHTML(x){
+  if(x.kind==="quiz") return `<div class="quiz" id="quiz"></div>`;
+  if(x.kind==="comic") return `<div class="cpage">
+    <div class="pic"><img src="${COMIC_IMG}" alt="Gauri and Dhruv"></div>
+    <div class="poem">
+      <p>Jab Dhruv mila Gauri se, shuru hui unki kahaani,<br>Thodi si masti, thodi si shararat, and a wholesome life, jaise koi film puraani.</p>
+      <p>Jo shuru hua communiti se, ab aaya hai itni door,<br>I hope you know you both are so special, ek dum jhakaas, aur mere aankhon ke noor.</p>
+      <p>Now that you two are gearing up, to play the greatest shaadi-hosts,<br>Yaad rakhna, SRK ne kaha tha, picture abhi baaki hai mere dost &hearts;</p>
+      <p class="note">(Sorry ya Gauri, this poem sucks but point is: I love you both very much.)</p>
+    </div>
+  </div>`;
   if(x.kind==="photo"){
     return `<figure class="photo"><div class="frame"><img src="${x.src}" alt="${x.alt}"><svg class="fl a" viewBox="0 0 100 100" aria-hidden="true">${use("marigold",0,0,100)}</svg><svg class="fl b" viewBox="0 0 100 100" aria-hidden="true">${use("rose5",0,0,100,"--p:#E8407A;--p2:#B01558")}</svg></div><figcaption>${x.caption}</figcaption></figure>`;
   }
@@ -584,10 +639,11 @@ function show(i){
           <div class="pills"><a class="pill fill" href="${s.spotify||spotifyUrl(s.title,s.artist)}" target="_blank" rel="noopener">Listen on Spotify</a><a class="pill line" href="${s.youtube||ytUrl(s.title,s.artist)}" target="_blank" rel="noopener">Listen on YouTube</a></div>
         </div>
       </section>
-      <section class="sec extra"><h3>${d.extra.title}</h3>${extraHTML(d.extra)}</section>
+      <section class="sec extra">${d.extra.title?`<h3>${d.extra.title}</h3>`:""}${extraHTML(d.extra)}</section>
     </div>
     <div class="sheet-foot">${last?`<button class="next quiet" data-big>Read the big letter</button>`:`<button class="next" data-next="${i+1}">Open the next door</button>`}</div>`;
   dlg.showModal();sheet.scrollTop=0;
+  initGames();
 }
 
 function showBig(){
@@ -602,6 +658,55 @@ function showBig(){
     <div class="sheet-foot"><button class="next quiet" data-close>Close</button></div>`;
   dlg.showModal();sheet.scrollTop=0;
 }
+
+/* ---------- Memory quiz ---------- */
+const QZ = {i:0, score:0, revealed:false, guess:"", right:false};
+
+function isRight(guess, accept){
+  const g = guess.toLowerCase().replace(/[^a-z0-9 ]/g," ").trim();
+  if(!g) return false;
+  const tokens = g.split(/\s+/), flat = g.replace(/\s+/g,"");
+  return accept.some(a=>{
+    if(/^\d+$/.test(a)) return tokens.includes(a);
+    return flat.includes(a.replace(/\s+/g,""));
+  });
+}
+function renderQuiz(){
+  const host=$("#quiz"); if(!host) return;
+  if(QZ.i>=QUIZ.length){
+    const msg=QZ.score===QUIZ.length?QUIZ_PERFECT:QUIZ_OTHER;
+    host.innerHTML=`<p class="qscore">${QZ.score} of ${QUIZ.length}</p><p class="qfb">${msg}</p><div class="qact"><button class="next quiet" data-qreset>Play again</button></div>`;
+    return;
+  }
+  const q=QUIZ[QZ.i], lastQ=QZ.i+1===QUIZ.length;
+  let body;
+  if(!QZ.revealed){
+    body=`<label class="qlabel" for="qin">Type your answer</label>
+      <input class="qin" id="qin" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Your answer…" value="${QZ.guess.replace(/"/g,"&quot;")}">
+      <div class="qact"><button class="next" data-reveal>Reveal answer</button></div>`;
+  } else {
+    const verdict=QZ.right?"Yes! You got it.":(QZ.guess.trim()?"Not quite.":"No guess? Fair enough.");
+    body=`<div class="qres ${QZ.right?"right":"wrong"}"><span class="qv">${verdict}</span><span class="qa">The answer: ${q.a}</span></div>
+      <div class="qact"><button class="next" data-qnext>${lastQ?"See how I did":"Next question"}</button></div>`;
+  }
+  host.innerHTML=`<p class="qprog">Question ${QZ.i+1} of ${QUIZ.length}</p><p class="qtext">${q.q}</p>${body}`;
+  const inp=$("#qin"); if(inp) inp.focus({preventScroll:true});
+}
+function qReveal(){
+  const inp=$("#qin"); QZ.guess=inp?inp.value:QZ.guess;
+  QZ.right=isRight(QZ.guess,QUIZ[QZ.i].accept);
+  if(QZ.right) QZ.score++;
+  QZ.revealed=true; renderQuiz();
+}
+function initGames(){ if($("#quiz")) renderQuiz(); }
+sheet.addEventListener("click",e=>{
+  if(e.target.closest("[data-reveal]")){ qReveal(); return; }
+  if(e.target.closest("[data-qnext]")){ QZ.i++; QZ.revealed=false; QZ.guess=""; QZ.right=false; renderQuiz(); return; }
+  if(e.target.closest("[data-qreset]")){ QZ.i=0; QZ.score=0; QZ.revealed=false; QZ.guess=""; QZ.right=false; renderQuiz(); }
+});
+sheet.addEventListener("keydown",e=>{
+  if(e.key==="Enter" && e.target.id==="qin"){ e.preventDefault(); qReveal(); }
+});
 
 /* Petals */
 function burst(el){
